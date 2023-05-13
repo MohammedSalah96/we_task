@@ -1,0 +1,115 @@
+{% extends '../base.html' %}
+{% load static %}
+
+{% block extrajs %}
+    <script src="{% static 'scripts/users.js' %}"></script>
+{% endblock extrajs %}
+
+{% block content %}
+    {% csrf_token %}
+    <div class="row">
+        <div class="modal fade" id="addEditUsers" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="addEditUsersLabel"></h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form role="form"  id="addEditUsersForm"  enctype="multipart/form-data">
+                            <input type="hidden" name="id" id="id" value="0">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <input type="number" class="form-control" id="code" name="code" placeholder="User Code">
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                     <div class="form-group col-md-6">
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <input type="number" class="form-control" id="mobile" name="mobile" placeholder="Mobile">
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                     <div class="form-group col-md-6">
+                                        <input type="date" class="form-control" id="dob" name="dob" placeholder="Date Of Birth">
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <input type="number" class="form-control" id="salary" name="salary" placeholder="Salary">
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                     <div class="form-group col-md-6">
+                                        <select class="form-control" id="department" name="department">
+                                            <option value="">Choose</option>
+                                            {% for department in departments %}
+                                                <option value="{{department.id}}">{{department.name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-info submit-form">save</button>
+                        <button type="button" class="btn btn-white" data-dismiss="modal">close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="col-md-12 d-flex justify-content-end">
+            <div class="btn-group">
+                <a class="btn btn-success" style="margin-top: 40px;" href="#" onclick="Users.add(); return false;"> Add <i class="fa fa-plus"></i> </a>
+            </div>
+        </div>
+
+        
+        <div class="row">
+            <div class="col-12">
+                <h2>Search for Users</h2>
+                 <div class="col-9">
+                    
+                        <div class="form-row align-items-center">
+                            <div class="col-auto">
+                                <label class="sr-only" for="inlineFormInput">Name</label>
+                                <input type="text" name="username" id='search-name' class="form-control mb-2" id="inlineFormInput" placeholder='Name'>
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-primary mb-2" onclick="Users.search()" id='search-btn'>Search</button>
+                            </div>
+                        </div>
+                        <div class="form-row align-items-center">
+                            <div class="col-auto">
+                                <label class="sr-only" for="inlineFormInput">Employee ID</label>
+                                <input type="text" id='search-code' name="code" class="form-control mb-2" id="inlineFormInput" placeholder='Employee ID'>
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-primary mb-2" id='reset-btn'>Show All</button>
+                            </div>
+                        </div>
+                    
+            </div>
+            </div>
+           
+             <div class="col-md-12">
+                <h1>Users</h1>
+                <div id="users-tree">
+                    
+                </div>
+            </div>
+        </div>
+       
+        
+    </div>
+    
+{% endblock content %}
